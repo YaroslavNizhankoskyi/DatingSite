@@ -11,7 +11,9 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace DatingApp.API.Controllers {
-    [Route ("api/controller")]
+
+
+    [Route ("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase {
 
@@ -24,6 +26,8 @@ namespace DatingApp.API.Controllers {
             _config = config;
         }
 
+
+        [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegister)
         {
             userForRegister.UserName = userForRegister.UserName.ToLower();
@@ -33,7 +37,7 @@ namespace DatingApp.API.Controllers {
 
             var UserToCreate = new User
             {
-                UserName = userForRegister.UserName
+                Username = userForRegister.UserName
             };
 
             var createdUser = await _authRepository.Register(UserToCreate, userForRegister.Password);
@@ -47,13 +51,14 @@ namespace DatingApp.API.Controllers {
             var user = await _authRepository.Login(userForLogin.UserName, userForLogin.Password);
 
             if(user == null){
+                
                 return Unauthorized();
             }
 
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString() ),
-                new Claim(ClaimTypes.Name, user.UserName)
+                new Claim(ClaimTypes.Name, user.Username)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.
