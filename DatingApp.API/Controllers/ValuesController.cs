@@ -10,6 +10,8 @@ namespace DatingApp.API.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+
+        [AllowAnonymous]
         [HttpGet("GetValues")]
         public ActionResult<IEnumerable<string>> GetValues()
         {
