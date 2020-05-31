@@ -22,6 +22,7 @@ export class MemberDetailsResolver implements Resolve<User> {
                 return of(null);
             })
         );
+        console.log(user);
         return user;
     }
 }

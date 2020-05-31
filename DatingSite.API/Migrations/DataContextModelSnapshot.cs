@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace DatingSite.API.Migrations
+namespace DatingApp.API.Migrations
 {
     [DbContext(typeof(DataContext))]
     partial class DataContextModelSnapshot : ModelSnapshot
@@ -50,9 +50,6 @@ namespace DatingSite.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("BirthdayDate")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("City")
                         .HasColumnType("TEXT");
 
@@ -62,16 +59,22 @@ namespace DatingSite.API.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Gender")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("InterestedIn")
+                    b.Property<string>("Interests")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Intro")
+                    b.Property<string>("Introduction")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("KnownAs")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("LastActive")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LookingFor")
@@ -84,9 +87,6 @@ namespace DatingSite.API.Migrations
                         .HasColumnType("BLOB");
 
                     b.Property<string>("Username")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("WasActive")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

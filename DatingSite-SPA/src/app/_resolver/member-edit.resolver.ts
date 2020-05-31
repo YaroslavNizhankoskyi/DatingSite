@@ -24,5 +24,6 @@ export class MemberEditResolver implements Resolve<User> {
             })
         );
         return user;
+        console.log(user);
     }
 }

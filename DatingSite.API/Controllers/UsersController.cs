@@ -42,7 +42,7 @@ namespace DatingSite.API.Controllers {
             return Ok(model);  
         }
 
-        [HttpPut("id")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userUpdate)
         {
             if(id != int.Parse(
