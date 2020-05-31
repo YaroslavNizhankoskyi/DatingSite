@@ -20,7 +20,7 @@ namespace DatingSite.API.Helpers
                  .ForMember(dest => dest.Age, opt => opt.MapFrom(src =>
                     src.BirthdayDate.CalculateAge()));
             CreateMap<Photo, PhotoDto>();
-            CreteMap<UserForUpdateDto, User>();
+            CreateMap<UserForUpdateDto, User>();
         }
     }
 }

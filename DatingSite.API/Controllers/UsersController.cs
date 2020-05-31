@@ -5,6 +5,9 @@ using DatingSite.API.Data;
 using DatingSite.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Security.Claims;
+
 
 namespace DatingSite.API.Controllers {
     [Authorize]
@@ -43,14 +46,14 @@ namespace DatingSite.API.Controllers {
         public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userUpdate)
         {
             if(id != int.Parse(
-                User.FindFirst(ClaimTypes.NameIdentifyer).Value))
+                User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 {
                     return Unauthorized();
                 }            
             var userFromRepo = await _datingRepository.GetUser(id);
-            _mapper.Map(UserForUpdateDto, userfromRepo);
+            _mapper.Map(userUpdate, userFromRepo);
 
-            if(await _repo.SaveAll())
+            if(await _datingRepository.SaveAll())
             {
                 return NoContent();
             }

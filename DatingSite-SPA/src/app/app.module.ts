@@ -45,7 +45,8 @@ export function tokenGetter() {
       MessagesComponent,
       MemberCardComponent,
       MemberDetailsComponent,
-      MemberEditComponent
+      MemberEditComponent,
+      
    ],
    imports: [
       HttpClientModule,
