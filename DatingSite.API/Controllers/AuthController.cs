@@ -9,6 +9,8 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using DatingSite.API.Helpers;
+using AutoMapper;
 
 namespace DatingSite.API.Controllers {
 
@@ -19,30 +21,33 @@ namespace DatingSite.API.Controllers {
 
         private readonly IAuthRepositry _authRepository;
         private readonly IConfiguration _config;
+        private readonly IMapper _mapper;
 
-        public AuthController (IAuthRepositry _authRepository, IConfiguration config) {
+        public AuthController (IAuthRepositry _authRepository, 
+        IConfiguration config, IMapper mapper) {
             
             this._authRepository = _authRepository;
             _config = config;
+            _mapper = mapper;
         }
 
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegister)
         {
-            userForRegister.UserName = userForRegister.UserName.ToLower();
+            userForRegister.Username = userForRegister.Username.ToLower();
 
-            if(await _authRepository.UserExists(userForRegister.UserName))
+            if(await _authRepository.UserExists(userForRegister.Username))
                 return BadRequest("UserName already exists");
 
-            var UserToCreate = new User
-            {
-                Username = userForRegister.UserName
-            };
+            var UserToCreate = _mapper.Map<User>(userForRegister);
 
             var createdUser = await _authRepository.Register(UserToCreate, userForRegister.Password);
 
-            return StatusCode(201);
+            var userToReturn = _mapper.Map<UserProfile>(createdUser);
+
+            return CreatedAtRoute("GetUser", new {controller = "Users",
+            id = createdUser.Id}, userToReturn);
         }
 
         [HttpPost("login")]
