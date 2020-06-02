@@ -1,3 +1,4 @@
+import { ListsResolver } from './_resolver/lists.resolver';
 import { ErrorInterceptorProvider } from './_services/error.intercepror';
 import { AuthService } from './_services/auth.service';
 import { NgModule } from '@angular/core';
@@ -83,7 +84,8 @@ export function tokenGetter() {
       MemberDetailsResolver,
       MemberListResolver,
       MemberEditResolver,
-      PreventUnsavedChanges
+      PreventUnsavedChanges,
+      ListsResolver
       // {
       //    provide: HAMMER_GESTURE_CONFIG,
       //    useClass: CustomHammerConfig
