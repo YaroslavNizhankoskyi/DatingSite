@@ -1,3 +1,6 @@
+using System.Xml.Schema;
+using System.Net.Security;
+using System.Net.Mime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,9 +105,14 @@ namespace DatingSite.API
 
             app.UseAuthorization();
 
+            app.UseDefaultFiles();
+
+            app.UseStaticFiles();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapFallbackToController("Index", "Fallback");
             });
         }
     }

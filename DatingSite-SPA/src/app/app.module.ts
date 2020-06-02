@@ -1,3 +1,5 @@
+import { MessagesResolver } from './_resolver/messages.resolver';
+import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 import { ListsResolver } from './_resolver/lists.resolver';
 import { ErrorInterceptorProvider } from './_services/error.intercepror';
 import { AuthService } from './_services/auth.service';
@@ -52,7 +54,8 @@ export function tokenGetter() {
       MemberCardComponent,
       MemberDetailsComponent,
       MemberEditComponent,
-      PhotoEditorComponent
+      PhotoEditorComponent,
+      MemberMessagesComponent
    ],
    imports: [
       HttpClientModule,
@@ -85,7 +88,8 @@ export function tokenGetter() {
       MemberListResolver,
       MemberEditResolver,
       PreventUnsavedChanges,
-      ListsResolver
+      ListsResolver,
+      MessagesResolver
       // {
       //    provide: HAMMER_GESTURE_CONFIG,
       //    useClass: CustomHammerConfig
