@@ -31,6 +31,7 @@
     "ngx-gallery": "^5.10.0",
     "ngx-gallery-9": "^1.0.6",
     "ngx-tabs": "0.0.13",
+    "ngx-timeago": "^1.0.4",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "v3": "0.0.0",

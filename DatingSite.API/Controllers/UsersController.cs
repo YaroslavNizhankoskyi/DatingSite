@@ -1,8 +1,13 @@
+using System.Text;
+using System.Net.NetworkInformation;
+using System.Reflection.Metadata;
+using System.Net;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using DatingSite.API.Data;
 using DatingSite.API.Dtos;
+using DatingSite.API.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,6 +15,7 @@ using System.Security.Claims;
 
 
 namespace DatingSite.API.Controllers {
+    [ServiceFilter(typeof(LogUserActivity))]
     [Authorize]
     [Route ("api/[controller]")]
     [ApiController]
@@ -25,11 +31,26 @@ namespace DatingSite.API.Controllers {
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> GetUsers () {
-            var users = await _datingRepository.GetUsers ();
+        public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams) {
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            var model = _mapper.Map<IEnumerable<UserForList>>(users);
-            return Ok(model);
+            var userFromRepo = await _datingRepository.GetUser(currentUserId);
+
+            userParams.UserId = currentUserId;
+
+            if (string.IsNullOrEmpty(userParams.Gender))
+            {
+                userParams.Gender = userFromRepo.Gender == "male" ? "female" : "male";
+            }
+
+            var users = await _datingRepository.GetUsers(userParams);
+
+            var usersToReturn = _mapper.Map<IEnumerable<UserForList>>(users);
+
+            Response.AddPagination(users.CurrentPage, users.PageSize,
+                 users.TotalCount, users.TotalPages);
+
+            return Ok(usersToReturn);
         }
 
         [AllowAnonymous]
